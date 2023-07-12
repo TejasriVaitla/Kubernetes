@@ -19,20 +19,20 @@ Page D has links to all three pages<br>
 
 ## Prerequisites
 
-- GKE cluster with one node:
+* GKE cluster with one node:
   ```
     gcloud container clusters create spark --num-nodes=1 --machine-type=e2-highmem-2 --region=us-central1
   ```
-  ![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/00caad7b-c409-4c6d-9d9c-223ce2e1878e)
+  <img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/00caad7b-c409-4c6d-9d9c-223ce2e1878e.png">
 
 # Implementation
-NFS Server Provisioner installation:
+* NFS Server Provisioner installation:
 ```
 helm repo add stable https://charts.helm.sh/stable
 helm install nfs stable/nfs-server-provisioner
 --set persistence.enabled=true,persistence.size=5Gi
 ```
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/d168595a-a77e-44da-a170-3d0006580601)
+<img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/d168595a-a77e-44da-a170-3d0006580601.png">
 
 ## Setup
 Create a Persistent Volume Claim and a Pod to use NFS:
@@ -41,13 +41,13 @@ Create a Persistent Volume Claim and a Pod to use NFS:
 ```
 kubectl apply -f spark-pvc.yaml
 ```
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/362163ef-bc79-4923-b8a6-39a61bee6698)
+<img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/362163ef-bc79-4923-b8a6-39a61bee6698.png">
 
 * Prepare your application JAR file
 ```
 docker run -v /tmp:/tmp -it bitnami/spark -- find /opt/bitnami/spark/examples/jars/ -name spark-examples* -exec cp {} /tmp/my.jar \;
 ```
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/edb6d96d-4709-47fc-80b9-94d2226f349d)
+<img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/edb6d96d-4709-47fc-80b9-94d2226f349d.png">
 
 * Add a test file for word count
 ```
@@ -58,33 +58,33 @@ echo "the quick brown fox the fox ate the mouse how now brown cow" > /tmp/test1.
 kubectl cp /tmp/my.jar spark-data-pod:/data/my.jar
 kubectl cp /tmp/test1.txt spark-data-pod:/data/test1.txt
 ```
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/8aff8c6b-399b-4180-b262-8f2ebfb622e2)
+<img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/8aff8c6b-399b-4180-b262-8f2ebfb622e2.png">
 
 ## Deploy Apache Spark on Kubernetes
 * Deploy Apache Spark using the Bitnami Apache Spark Helm chart
 * Create the file spark-chart.yaml
   
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/c3d2f20b-0cfd-42d3-a425-4c2ba5dada77)
+<img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/c3d2f20b-0cfd-42d3-a425-4c2ba5dada77.png">
 
 * Check Pods are running
   
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/dd0d4634-cb6b-4487-b264-fb61debec2be)
+<img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/dd0d4634-cb6b-4487-b264-fb61debec2be.png">
 
 * Install the chart
 ```
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm install spark bitnami/spark -f spark-chart.yaml
 ```
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/237b5633-97ff-4ab4-922c-a7abfd1c7357)
+<img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/237b5633-97ff-4ab4-922c-a7abfd1c7357.png">
 
 * Get the external IP of the running pod
 ```
 kubectl get svc -l "app.kubernetes.io/instance=spark,app.kubernetes.io/name=spark"
 ```
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/7ab4e819-8dac-44e5-af37-0aaced9a253a)
+<img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/7ab4e819-8dac-44e5-af37-0aaced9a253a.png">
 
 * Open the external ip on your browser
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/30a33a14-fa54-48b4-89ae-e338882ef65d)
+<img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/30a33a14-fa54-48b4-89ae-e338882ef65d.png">
 
 ## Word Count Example
 1. Submit a word count task
@@ -97,18 +97,18 @@ kubectl run --namespace default spark-client --rm --tty -i --restart='Never' \
     /data/my.jar /data/test1.txt
 ```
 
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/6bb577a5-10b8-4076-b908-fcd881112ac4)
+<img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/6bb577a5-10b8-4076-b908-fcd881112ac4.png">
 
 2. View the output of the completed job
 * On the browser, you should see the worker node ip address of the finished task
   
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/87f2a3c7-6483-4515-8966-cf38f832e44d)
+<img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/87f2a3c7-6483-4515-8966-cf38f832e44d.png">
 
 * Get the name of the worker node
 ```
   kubectl get pods -o wide | grep WORKER-NODE-ADDRESS
 ```
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/695cb55c-9570-4869-bb1a-27e685ec373f)
+<img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/695cb55c-9570-4869-bb1a-27e685ec373f.png">
 
 * Execute a pod and see the result of the finished tasks
 ```
@@ -116,7 +116,7 @@ kubectl exec -it <worker node name> -- bash
 cd /opt/bitnami/spark/work
 cat <taskname>/stdout
 ```
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/fd3b817a-7237-4ccf-8271-4b418555b744)
+<img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/fd3b817a-7237-4ccf-8271-4b418555b744.png">
 
 ## PageRank Example
 * Execute the Spark master pod
@@ -131,11 +131,11 @@ cd /opt/bitnami/spark/examples/src/main/python
 ```
 spark-submit pagerank.py /opt 2
 ```
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/4a1613bf-3161-4e9b-9be2-3b9dd501e3ac)
+<img alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/4a1613bf-3161-4e9b-9be2-3b9dd501e3ac.png">
 
 * Output
 
-![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/f3dd0148-7c80-4cd6-9f5a-1ee2418e30bf)
+<img width="500" alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/f3dd0148-7c80-4cd6-9f5a-1ee2418e30bf.png">
 
 ## Detail Design Presentation 
 [Word count and PageRank using Kubernetes](https://docs.google.com/presentation/d/1IzL1jjukAwHsJUa0DEWfG6Sq3Uc8YAAphOAmdiw-jb8/edit?usp=sharing)
