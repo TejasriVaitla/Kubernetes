@@ -61,12 +61,14 @@ kubectl cp /tmp/test1.txt spark-data-pod:/data/test1.txt
 ![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/8aff8c6b-399b-4180-b262-8f2ebfb622e2)
 
 ## Deploy Apache Spark on Kubernetes
-* Deploy Apache Spark using the Bitnami Apache Spark Helm chart:
+* Deploy Apache Spark using the Bitnami Apache Spark Helm chart
 * Create the file spark-chart.yaml
+  
 ![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/c3d2f20b-0cfd-42d3-a425-4c2ba5dada77)
 
 * Check Pods are running
-  ![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/dd0d4634-cb6b-4487-b264-fb61debec2be)
+  
+![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/dd0d4634-cb6b-4487-b264-fb61debec2be)
 
 * Install the chart
 ```
@@ -94,10 +96,12 @@ kubectl run --namespace default spark-client --rm --tty -i --restart='Never' \
     --class org.apache.spark.examples.JavaWordCount \
     /data/my.jar /data/test1.txt
 ```
+
 ![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/6bb577a5-10b8-4076-b908-fcd881112ac4)
 
 2. View the output of the completed job
 * On the browser, you should see the worker node ip address of the finished task
+  
 ![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/87f2a3c7-6483-4515-8966-cf38f832e44d)
 
 * Get the name of the worker node
@@ -128,7 +132,10 @@ cd /opt/bitnami/spark/examples/src/main/python
 spark-submit pagerank.py /opt 2
 ```
 ![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/4a1613bf-3161-4e9b-9be2-3b9dd501e3ac)
+
 * Output
+
 ![image](https://github.com/TejasriVaitla/Kubernetes/assets/128747986/f3dd0148-7c80-4cd6-9f5a-1ee2418e30bf)
-* Detail Design Presentation 
+
+## Detail Design Presentation 
 [Word count and PageRank using Kubernetes](https://docs.google.com/presentation/d/1IzL1jjukAwHsJUa0DEWfG6Sq3Uc8YAAphOAmdiw-jb8/edit?usp=sharing)
