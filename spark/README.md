@@ -138,4 +138,4 @@ spark-submit pagerank.py /opt 2
 <img width="500" alt="image" src="https://github.com/TejasriVaitla/Kubernetes/assets/128747986/f3dd0148-7c80-4cd6-9f5a-1ee2418e30bf.png">
 
 ## Detail Design Presentation 
-[Word count and PageRank using Kubernetes](https://docs.google.com/presentation/d/1wVUOm_7hzZYzt7eQSv1w6YzLNtseNzErTzEmby0HmE/edit#slide=id.p)
+[Word count and PageRank using Kubernetes](https://docs.google.com/presentation/d/1wVUOm_7hzZYz-t7eQSv1w6YzLNtseNzErTzEmby0HmE/edit?usp=sharing)
